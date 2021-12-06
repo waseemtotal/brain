@@ -99,12 +99,16 @@ class AddressDataBuilder implements BuilderInterface
 
         $billingAddress = $order->getBillingAddress();
         if ($billingAddress) {
+            $street = $billingAddress->getStreet();
+            $streetAddress = array_shift($street);
+            $extendedAddress = implode(', ', $street);
+
             $result[self::BILLING_ADDRESS] = [
                 self::FIRST_NAME => $billingAddress->getFirstname(),
                 self::LAST_NAME => $billingAddress->getLastname(),
                 self::COMPANY => $billingAddress->getCompany(),
-                self::STREET_ADDRESS => $billingAddress->getStreetLine1(),
-                self::EXTENDED_ADDRESS => $billingAddress->getStreetLine2(),
+                self::STREET_ADDRESS => $streetAddress,
+                self::EXTENDED_ADDRESS => $extendedAddress,
                 self::LOCALITY => $billingAddress->getCity(),
                 self::REGION => $billingAddress->getRegionCode(),
                 self::POSTAL_CODE => $billingAddress->getPostcode(),
@@ -114,12 +118,16 @@ class AddressDataBuilder implements BuilderInterface
 
         $shippingAddress = $order->getShippingAddress();
         if ($shippingAddress) {
+            $street = $shippingAddress->getStreet();
+            $streetAddress = array_shift($street);
+            $extendedAddress = implode(', ', $street);
+
             $result[self::SHIPPING_ADDRESS] = [
                 self::FIRST_NAME => $shippingAddress->getFirstname(),
                 self::LAST_NAME => $shippingAddress->getLastname(),
                 self::COMPANY => $shippingAddress->getCompany(),
-                self::STREET_ADDRESS => $shippingAddress->getStreetLine1(),
-                self::EXTENDED_ADDRESS => $shippingAddress->getStreetLine2(),
+                self::STREET_ADDRESS => $streetAddress,
+                self::EXTENDED_ADDRESS => $extendedAddress,
                 self::LOCALITY => $shippingAddress->getCity(),
                 self::REGION => $shippingAddress->getRegionCode(),
                 self::POSTAL_CODE => $shippingAddress->getPostcode(),
